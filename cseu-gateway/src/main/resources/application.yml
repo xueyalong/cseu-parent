@@ -1,0 +1,84 @@
+user:
+  uri: lb://cseu-user
+  id: cseu-user-8080
+server:
+  port: 8085
+spring:
+  redis:
+    host: 192.168.1.20
+    port: 6379
+    jedis:
+      pool:
+        max-idle: 100
+        min-idle: 1
+        max-wait: -1
+        max-active: 8
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        tags: version=1.0,author=yalong.xue
+        healthCheckPath: /u/u/actuator/health
+        healthCheckInterval: 5s
+        ip-address: ${HOST_ADDRESS:localhost}
+        port: ${SERVER_PORT:${server.port}}
+        instance-id: ${spring.application.name}-${server.port}
+        service-name: ${spring.application.name}
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: '*'
+        enabled: false
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+      routes:
+        - id: ${user.id}
+          # 重点！/info必须使用http进行转发，lb代表从注册中心获取服务
+          uri: ${user.uri}
+          predicates:
+            # 重点！转发该路径！,/userapi/**,
+            - Path=/u/u/**
+          #而不是我们期望的去掉userapi，只保留**部分
+          filters:
+            - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                # 需要与上边的方法名保持一致
+                rate-limiter: "#{@systemRedisRateLimiter}"
+                # 需要与策略类的方法名保持一致。
+                key-resolver: "#{@sysKeyResolver}"
+            - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/timeout
+#            - Auth=true
+    loadbalancer:
+      retry:
+        enabled: true
+  hystrix:
+    command:
+      default:
+        execution:
+          timeout:
+            enabled: true
+          isolation:
+            thread:
+              timeoutInMilliseconds: 3000
+
+  application:
+    name: cseu-gateway
+
+
+
+
+
+

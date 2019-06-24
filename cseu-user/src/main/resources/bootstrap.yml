@@ -1,0 +1,34 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /u/
+spring:
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        tags: version=1.0,author=yalong.xue
+        healthCheckPath: /u/actuator/health
+        healthCheckInterval: 5s
+        ip-address: ${HOST_ADDRESS:localhost}
+        port: ${server.port}
+        instance-id: ${spring.application.name}:${server.port}
+        service-name: ${spring.application.name}
+  application:
+    name: cseu-user
+  mvc:
+    favicon:
+      enabled: false
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutinMilliseconds: 5000
+ribbon:
+  connectTimeout: 500
+management.server.servlet.context-path: /rpc/manage
+management.security: false
+management.endpoints.web.cors.allowed-headers: "*"
