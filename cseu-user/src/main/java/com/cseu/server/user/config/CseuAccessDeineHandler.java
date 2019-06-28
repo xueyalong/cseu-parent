@@ -1,7 +1,9 @@
 package com.cseu.server.user.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +17,9 @@ import java.io.IOException;
  * @author: yalong.xue
  * @date 2019-06-2721:37
  */
+
+@Component
+@Slf4j
 public class CseuAccessDeineHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response,
