@@ -37,4 +37,4 @@ logging:
     com:
       cseu:
         server: info
-
+debug: true

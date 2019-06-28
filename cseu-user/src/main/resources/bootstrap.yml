@@ -1,7 +1,7 @@
 server:
   port: 8080
   servlet:
-    context-path: /u/
+    context-path: /u
 spring:
   cloud:
     consul:
@@ -15,6 +15,12 @@ spring:
         port: ${server.port}
         instance-id: ${spring.application.name}:${server.port}
         service-name: ${spring.application.name}
+  security:
+    oauth2:
+      resource:
+        id: resource
+        user-info-uri: lb://cseu-gateway
+        prefer-token-info: false
   application:
     name: cseu-user
   mvc:

@@ -1,9 +1,8 @@
-package com.cseu.server.gateway.config;
+package com.cseu.server.user.config;
 
-import com.cseu.server.gateway.service.impl.UserDetailsServicIpml;
+import com.cseu.server.user.service.impl.UserDetailsServicIpml;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,7 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 
 
 /**
@@ -29,7 +28,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 
 
 @Configuration
-@EnableAuthorizationServer
+@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Slf4j
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -50,18 +49,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .headers().frameOptions().disable()
-                .and().authorizeRequests()
-                .antMatchers("/registry").permitAll() // 注册请求不需要验证
-                .antMatchers("/sign_up").permitAll()
-                .antMatchers("/actuator/health").permitAll()
-                .anyRequest().authenticated()
-                .and().formLogin().loginPage("/sign_in")
-                .loginProcessingUrl("/login").defaultSuccessUrl("/personal_center",true)
-                .failureUrl("/sign_in?error").permitAll()
-                .and().logout().logoutSuccessUrl("/sign_in").permitAll()
-                .and().csrf().disable();
+        http.csrf().disable()
+                .antMatcher("/**")
+                .authorizeRequests()
+                .anyRequest()
+                .authenticated()
+                .antMatchers("/oauth/**")
+                .permitAll()
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(new CseuAccessDeineHandler())
+                .authenticationEntryPoint(new CseuAuthenticationEntryPoint());
     }
 
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
