@@ -5,8 +5,9 @@ import com.cseu.server.user.bean.CseuRole;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-import java.util.List;
 
 /**
  * @title: CseuGuestRpcService
@@ -18,7 +19,7 @@ import java.util.List;
 @FeignClient(value = "cseu-user",path = "/rpc/u/")
 public interface CseuGuestRpcService  {
     @GetMapping(value = "d")
-    CseuGuest findCseuUserByUserCount(@RequestParam(value = "userCount") String userCount);
+    Mono<CseuGuest> findCseuUserByUserCount(@RequestParam(value = "userCount") String userCount);
     @GetMapping(value = "d")
-    List<CseuRole> findCseuRolesByUserId(@RequestParam("id") long id);
+    Flux<CseuRole> findCseuRolesByUserId(@RequestParam("id") long id);
 }

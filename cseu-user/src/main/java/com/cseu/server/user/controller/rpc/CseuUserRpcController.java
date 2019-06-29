@@ -9,8 +9,9 @@ import com.cseu.server.user.service.CseuGuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-import java.util.List;
 
 /**
  * @title: CseuUserRpcController
@@ -25,12 +26,14 @@ public class CseuUserRpcController  implements CseuGuestRpcService {
     @Autowired
     private CseuGuestService cseuGuestService;
     @Override
-    public CseuGuest findCseuUserByUserCount(String userCount) {
-        return cseuGuestService.getOne(new QueryWrapper<CseuGuest>().eq("user_count",userCount));
+    public Mono<CseuGuest> findCseuUserByUserCount(String userCount) {
+
+        return Mono.defer(() -> Mono.justOrEmpty(cseuGuestService.getOne(new QueryWrapper<CseuGuest>().eq("user_count",userCount))));
+                //使用自定义的线程池执行会阻塞的任务，防止reactor线程被阻
     }
 
     @Override
-    public List<CseuRole> findCseuRolesByUserId(long id) {
+    public Flux<CseuRole> findCseuRolesByUserId(long id) {
         return null;
     }
 }
