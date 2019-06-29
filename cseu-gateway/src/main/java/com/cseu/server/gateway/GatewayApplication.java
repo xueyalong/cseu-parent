@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.validation.Validator;
+import org.springframework.web.reactive.config.EnableWebFlux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -24,7 +25,8 @@ import java.util.List;
 @EnableDiscoveryClient
 @EnableHystrix
 @SpringBootApplication
-@EnableFeignClients
+@EnableWebFlux
+@EnableFeignClients(basePackages = "com.cseu.server.*")
 public class GatewayApplication {
     private static final Logger logger = LoggerFactory.getLogger(GatewayApplication.class);
 

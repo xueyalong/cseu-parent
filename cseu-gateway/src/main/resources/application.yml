@@ -48,18 +48,18 @@ spring:
             # 重点！转发该路径！,/userapi/**,
             - Path=/u/u/**
           #而不是我们期望的去掉userapi，只保留**部分
-          filters:
-            - StripPrefix=1
-            - name: RequestRateLimiter
-              args:
-                # 需要与上边的方法名保持一致
-                rate-limiter: "#{@systemRedisRateLimiter}"
-                # 需要与策略类的方法名保持一致。
-                key-resolver: "#{@sysKeyResolver}"
-            - name: Hystrix
-              args:
-                name: fallbackcmd
-                fallbackUri: forward:/timeout
+#          filters:
+#            - StripPrefix=1
+#            - name: RequestRateLimiter
+#              args:
+#                # 需要与上边的方法名保持一致
+#                rate-limiter: "#{@systemRedisRateLimiter}"
+#                # 需要与策略类的方法名保持一致。
+#                key-resolver: "#{@sysKeyResolver}"
+#            - name: Hystrix
+#              args:
+#                name: fallbackcmd
+#                fallbackUri: forward:/timeout
 #            - Auth=true
     loadbalancer:
       retry:
@@ -77,7 +77,11 @@ spring:
   application:
     name: cseu-gateway
 
-
+logging:
+  level:
+    com:
+      cseu:
+        server: info
 
 
 
