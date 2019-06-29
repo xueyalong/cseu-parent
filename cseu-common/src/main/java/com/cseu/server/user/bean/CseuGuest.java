@@ -1,12 +1,11 @@
 package com.cseu.server.user.bean;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.*;
 import lombok.experimental.Accessors;
+
+import java.util.Date;
 
 /**
  * <p>
@@ -22,7 +21,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CseuGuest implements Serializable {
+public class CseuGuest  {
 
     private static final long serialVersionUID = 1L;
 
