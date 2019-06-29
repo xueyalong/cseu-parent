@@ -3,13 +3,12 @@ package com.cseu.server.gateway.service.impl;
 import com.cseu.server.gateway.base.exception.CesuException;
 import com.cseu.server.user.api.CseuGuestRpcService;
 import com.cseu.server.user.bean.CseuGuest;
-import com.cseu.server.user.bean.CseuRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * @title: CseuReactiveUserDetailsServiceImpl
@@ -25,13 +24,12 @@ public class CseuReactiveUserDetailsServiceImpl implements ReactiveUserDetailsSe
 
     @Override
     public Mono<UserDetails> findByUsername(String userCount) {
-        CseuGuest cseuGuest=cseuGuestRpcService.findCseuUserByUserCount(userCount);
-        Mono<CseuGuest> cseuGuestMono = Mono.just(cseuGuest);
+        Mono<CseuGuest> cseuGuestMono=cseuGuestRpcService.findCseuUserByUserCount(userCount);
 
         return cseuGuestMono.switchIfEmpty(Mono.error(()->new CesuException(CesuException.ErrorEnum.USER_NOT_EXISTS))
-                .flatMap(cseuGuest.getId()-> {
-                    return (Mono<UserDetails>) cseuGuestRpcService.findCseuRolesByUserId(cseuGuest.getId());
-                }));
+                .flatMap((cseuGuest)-> cseuGuestRpcService.findCseuRolesByUserId(cseuGuest.getId())
+                        .collect(ArrayList<Long>::new,(cseuRolesIdList,cseuRole)->cseuRolesIdList.add(cseuRole.getId()))
+                ));
     }
 
 }
