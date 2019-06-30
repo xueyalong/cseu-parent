@@ -9,7 +9,7 @@ import com.cseu.server.user.bean.CseuGuest;
  * </p>
  *
  * @author yalong.xue
- * @since 2019-06-16
+ * @since 2019-06-30
  */
 public interface CseuGuestService extends IService<CseuGuest> {
 

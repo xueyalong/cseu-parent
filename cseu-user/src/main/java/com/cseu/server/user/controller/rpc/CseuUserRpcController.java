@@ -4,8 +4,8 @@ package com.cseu.server.user.controller.rpc;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cseu.server.user.api.CseuGuestRpcService;
 import com.cseu.server.user.bean.CseuGuest;
-import com.cseu.server.user.bean.Permission;
-import com.cseu.server.user.bean.Role;
+import com.cseu.server.user.bean.CseuPermission;
+import com.cseu.server.user.bean.CseuRole;
 import com.cseu.server.user.service.CseuGuestService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class CseuUserRpcController implements CseuGuestRpcService {
     }
 
     @Override
-    public Flux<Role> findCseuRolesByUserId(@RequestParam("parames") ArrayList<Long> parames) {
+    public Flux<CseuRole> findCseuRolesByUserId(@RequestParam("parames") ArrayList<Long> parames) {
         return null;
     }
 
@@ -52,7 +52,7 @@ public class CseuUserRpcController implements CseuGuestRpcService {
     }
 
     @Override
-    public Flux<Permission> findByPermissionIdList(@RequestParam(value = "parames") ArrayList<Long> parames) {
+    public Flux<CseuPermission> findByPermissionIdList(@RequestParam(value = "parames") ArrayList<Long> parames) {
         return null;
     }
 

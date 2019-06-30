@@ -2,14 +2,14 @@ package com.cseu.server.user.bean;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * <p>
@@ -19,12 +19,12 @@ import java.util.Date;
  * @author yalong.xue
  * @since 2019-06-30
  */
+@TableName("cseu_role")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("cseu_role")
-public class Role extends Model<Role> {
+public class CseuRole extends Model<CseuRole> {
 
     private static final long serialVersionUID = 1L;
 
@@ -36,24 +36,28 @@ public class Role extends Model<Role> {
     /**
      * 角色名称
      */
+    @TableField("cseu_role_name")
     private String cseuRoleName;
 
     /**
      * 角色编码
      */
+    @TableField("cseu_role_code")
     private String cseuRoleCode;
 
-    private Date creataTime;
+    @TableField("creata_time")
+    private LocalDateTime creataTime;
 
-    private Date updataTime;
+    @TableField("updata_time")
+    private LocalDateTime updataTime;
 
-    private Long cseuGuetId;
-
-
+    @TableField("cseu_guest_id")
+    private Long cseuGuestId;
 
     @Override
     protected Serializable pkVal() {
         return this.id;
     }
+
 
 }

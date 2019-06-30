@@ -2,16 +2,18 @@ package com.cseu.server.user.bean;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import lombok.*;
-import lombok.experimental.Accessors;
-
 import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * <p>
- *
+ * 
  * </p>
  *
  * @author yalong.xue
@@ -21,30 +23,32 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 @TableName("cseu_permission")
-public class Permission extends Model<Permission> {
+public class CseuPermission extends Model<CseuPermission> {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
 
+    @TableField("cseu_role_id")
     private Long cseuRoleId;
 
+    @TableField("cseu_guest_id")
     private Long cseuGuestId;
 
+    @TableField("cseu_permision_id")
     private Long cseuPermisionId;
 
-    private Date ceateTime;
+    @TableField("ceate_time")
+    private LocalDateTime ceateTime;
 
-    private Date updateTime;
+    @TableField("update_time")
+    private LocalDateTime updateTime;
 
 
     @Override
     protected Serializable pkVal() {
-        return this.id;
+        return this.getId();
     }
-
 
 }

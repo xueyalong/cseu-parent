@@ -1,9 +1,8 @@
 package com.cseu.server.user.api;
 
 import com.cseu.server.user.bean.CseuGuest;
-import com.cseu.server.user.bean.Permission;
-import com.cseu.server.user.bean.Role;
-import org.springframework.cloud.openfeign.FeignClient;
+import com.cseu.server.user.bean.CseuPermission;
+import com.cseu.server.user.bean.CseuRole;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,7 +32,7 @@ public interface CseuGuestRpcService {
      */
     @GetMapping(value = "ri")
     @ResponseBody
-    Flux<Role> findCseuRolesByUserId(@RequestParam("id") ArrayList<Long> id);
+    Flux<CseuRole> findCseuRolesByUserId(@RequestParam("id") ArrayList<Long> id);
 
     /**
      * 根据用户Id找找用户信息
@@ -47,5 +46,5 @@ public interface CseuGuestRpcService {
      */
     @GetMapping(value = "pi")
     @ResponseBody
-    Flux<Permission> findByPermissionIdList(@RequestParam("id") ArrayList<Long> id);
+    Flux<CseuPermission> findByPermissionIdList(@RequestParam("id") ArrayList<Long> id);
 }
