@@ -2,9 +2,12 @@ package com.cseu.server.user.bean;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -21,7 +24,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CseuGuest  {
+@TableName("cseu_guest")
+public class CseuGuest  extends Model<CseuGuest> {
 
     private static final long serialVersionUID = 1L;
 
@@ -80,6 +84,9 @@ public class CseuGuest  {
      * 乐观锁version字段
      */
     private Integer version;
-
+    @Override
+    protected Serializable pkVal() {
+        return this.id;
+    }
 
 }
