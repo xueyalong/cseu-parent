@@ -32,10 +32,9 @@ import java.util.List;
 @EnableDiscoveryClient
 @EnableHystrix
 @SpringBootApplication
-@MapperScan(basePackages = "com.cseu.server.gateway.*")
+@MapperScan(basePackages = "com.cseu.server.gateway.mapper")
 @EnableFeignClients(basePackages = "com.cseu.server.*.api")
 public class GatewayApplication {
-    private static final Logger logger = LoggerFactory.getLogger(GatewayApplication.class);
 
 
     public static void main(String[] args) {

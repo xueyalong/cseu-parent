@@ -28,16 +28,15 @@ import java.util.Objects;
 public class SignInController {
 
 
-
     @Autowired
     private RedisTemplate redisTemplate;
 
     @GetMapping("/refesh")
     @ResponseBody
     public Object login(@RequestParam("username") String username, @RequestParam("password") String password) {
-        CseuGuest cseuGuest = CseuGuest.builder().build().selectOne(new QueryWrapper<CseuGuest>().eq("user_count",username));
+        CseuGuest cseuGuest = CseuGuest.builder().build().selectOne(new QueryWrapper<CseuGuest>().eq("user_count", username));
         if (Objects.nonNull(cseuGuest)) {
-            return Jwt.saveToken(redisTemplate,username);
+            return Jwt.saveToken(redisTemplate, username);
         }
         return CesuException.ErrorEnum.USER_NOT_EXISTS;
     }
@@ -45,7 +44,7 @@ public class SignInController {
     @GetMapping("/token")
     @ResponseBody
     public Object token(@RequestParam("username") String username, @RequestParam("password") String password) {
-        CseuGuest cseuGuest =CseuGuest.builder().build().selectOne(new QueryWrapper<CseuGuest>().eq("user_count",username));
+        CseuGuest cseuGuest = CseuGuest.builder().build().selectOne(new QueryWrapper<CseuGuest>().eq("user_count", username));
         if (Objects.nonNull(cseuGuest)) {
             return Jwt.createJwt(cseuGuest.getUserCount());
         }
