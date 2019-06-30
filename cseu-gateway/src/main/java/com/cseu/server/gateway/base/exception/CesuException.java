@@ -19,7 +19,7 @@ public class CesuException extends Exception {
 
     private ErrorEnum errorEnum;
 
-    public CesuException() {
+    public CesuException(int i, String s) {
         super();
     }
 
@@ -48,6 +48,14 @@ public class CesuException extends Exception {
 
         public void setCode(int code) {
             this.code = code;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
         }
     }
 }

@@ -15,12 +15,6 @@ spring:
         port: ${server.port}
         instance-id: ${spring.application.name}:${server.port}
         service-name: ${spring.application.name}
-  security:
-    oauth2:
-      resource:
-        id: resource
-        user-info-uri: lb://cseu-gateway
-        prefer-token-info: false
   application:
     name: cseu-user
   mvc:
@@ -33,8 +27,28 @@ hystrix:
         isolation:
           thread:
             timeoutinMilliseconds: 5000
-ribbon:
-  connectTimeout: 500
 management.server.servlet.context-path: /rpc/manage
 management.security: false
 management.endpoints.web.cors.allowed-headers: "*"
+feign:
+  httpclient:
+    enabled: true
+  okhttp:
+    enabled: false
+  hystrix:
+    enabled: true
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json #请求和响应GZIP压缩支持
+      min-request-size: 2048
+    response:
+      enabled: true #支持压缩的mime types
+ribbon:
+  restclient:
+    enabled: true
+  okhttp:
+    enabled: false
+  http:
+    client:
+      enabled: true
