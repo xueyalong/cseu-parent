@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="cseu-common" />
         <module name="user" />
+        <module name="cseu-config" />
         <module name="cseu-gateway" />
       </profile>
     </annotationProcessing>
@@ -20,6 +21,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="cseu-common" options="-parameters" />
       <module name="cseu-common (2)" options="-parameters" />
+      <module name="cseu-config" options="-parameters" />
       <module name="cseu-gateway" options="-parameters" />
       <module name="user" options="-parameters" />
     </option>

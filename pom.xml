@@ -17,6 +17,7 @@
         <module>cseu-user</module>
         <module>cseu-common</module>
         <module>cseu-gateway</module>
+        <module>cseu-config</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
@@ -25,6 +26,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+    </dependencies>
     <dependencyManagement>
         <dependencies>
             <dependency>
