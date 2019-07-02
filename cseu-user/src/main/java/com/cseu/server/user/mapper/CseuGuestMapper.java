@@ -12,7 +12,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @author yalong.xue
  * @since 2019-06-16
  */
-@Mapper
 public interface CseuGuestMapper extends BaseMapper<CseuGuest> {
 
 }

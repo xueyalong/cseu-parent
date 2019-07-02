@@ -1,0 +1,14 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /user
+spring:
+  application:
+    name: cseu-user
+  cloud:
+    config:
+      discovery:
+        enabled: false
+      uri: http://127.0.0.1:9000
+      label: master
+      profile: dev

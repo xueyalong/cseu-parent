@@ -1,26 +1,5 @@
-server:
-  port: 8080
-
-spring:
-  application:
-    name: cseu-user
-  cloud:
-    config:
-      name: cseu-user
-      label: master
-      discovery:
-        enabled: true
-        service-id: cseu-config
-      uri: http://127.0.0.1:8888
-      profile: master
-    consul:
-      host: 127.0.0.1
-      port: 8500
-      discovery:
-        tags: version=1.0,author=yalong.xue
-        healthCheckPath: /config/actuator/health
-        healthCheckInterval: 5s
-        ip-address: ${HOST_ADDRESS:localhost}
-        port: ${SERVER_PORT:${server.port}}
-        instance-id: ${spring.application.name}-${server.port}
-        service-name: ${spring.application.name}
+logging:
+  level:
+    com:
+      cseu:
+        server: info
