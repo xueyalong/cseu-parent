@@ -1,40 +1,26 @@
+server:
+  port: 8080
+
 spring:
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    jedis:
-      pool:
-        max-idle: 100
-        min-idle: 1
-        max-wait: -1
-        max-active: 8
-  datasource:
-    hikari:
-      login-timeout: 30000
-      maximum-pool-size: 20
-      minimum-idle: 20
-      connection-timeout: 60000
-    username: root
-    password: 123456
-    url: jdbc:mysql://127.0.0.1:3306/cseu
-    driver-class-name: com.mysql.cj.jdbc.Driver
-mybatis-plus:
-  # 如果是放在src/main/java目录下 classpath:/com/yourpackage/*/mapper/*Mapper.xml
-  # 如果是放在resource目录 classpath:/mapper/*Mapper.xml
-  config-location: classpath:/mybatis/mybatis-config.xml
-  mapper-locations: classpath:/mybatis/mapper/*.xml
-  #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.cseu.bean
-  global-config:
-    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
-    id-type: 2
-    # 热加载mapper文件
-    refresh: true
-    db-config:
-      db-type: mysql
-logging:
-  level:
-    com:
-      cseu:
-        server: info
-debug: true
+  application:
+    name: cseu-user
+  cloud:
+    config:
+      name: cseu-user
+      label: master
+      discovery:
+        enabled: true
+        service-id: cseu-config
+      uri: http://127.0.0.1:8888
+      profile: master
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        tags: version=1.0,author=yalong.xue
+        healthCheckPath: /config/actuator/health
+        healthCheckInterval: 5s
+        ip-address: ${HOST_ADDRESS:localhost}
+        port: ${SERVER_PORT:${server.port}}
+        instance-id: ${spring.application.name}-${server.port}
+        service-name: ${spring.application.name}
