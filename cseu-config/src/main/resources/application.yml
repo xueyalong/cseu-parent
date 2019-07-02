@@ -5,8 +5,8 @@ spring:
         git:
           uri: https://github.com/xueyalong/cseu-config.git
           search-paths: config
-          username: xueyl101@163.com
-          password: xueyalong0321
+          username:
+          password:
     consul:
       host: 127.0.0.1
       port: 8500
@@ -24,12 +24,9 @@ spring:
       maximum-pool-size: 20
       minimum-idle: 20
       connection-timeout: 60000
-#    username: root
-#    password: 123456
-#    url: jdbc:mysql://127.0.0.1:3306/cseu
+    username: root
+    password: 123456
+    url: jdbc:mysql://127.0.0.1:3306/cseu
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://118.190.119.44:3306/goabroad
-    username: zcq
-    password: dig.1234
   application:
     name: cseu-config
