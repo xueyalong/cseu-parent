@@ -1,7 +1,6 @@
 package com.cseu.server.gateway.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
  * @date 2019-06-1609:47
  */
 @Configuration
-@MapperScan("com.cseu.server.gateway.mapper.*.*Mapper")
 public class MybatisPlusConfig {
     /*
      * 分页插件，自动识别数据库类型
