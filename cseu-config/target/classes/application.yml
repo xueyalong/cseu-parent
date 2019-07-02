@@ -5,8 +5,8 @@ spring:
         git:
           uri: https://github.com/xueyalong/cseu-config.git
           search-paths: config
-          username: xueyl101@163.com
-          password: xueyalong0321
+          username:
+          password:
     consul:
       host: 127.0.0.1
       port: 8500
