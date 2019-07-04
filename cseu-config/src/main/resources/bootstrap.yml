@@ -1,2 +1,23 @@
 server:
   port: 9000
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/xueyalong/cseu-config.git
+          search-paths: config
+          username: xueyl101@163.com
+          password: xueyalong0321
+  datasource:
+    hikari:
+      login-timeout: 30000
+      maximum-pool-size: 20
+      minimum-idle: 20
+      connection-timeout: 60000
+    username: zcq
+    password: dig.1234
+    url: jdbc:mysql://118.190.119.44:3306/goabroad
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  application:
+    name: cseu-config

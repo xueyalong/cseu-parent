@@ -1,0 +1,28 @@
+docker inspect --format '{{ .NetworkSettings.IPAddress }}'
+docker run  --network mynetwork --ip 172.18.0.11 -e ES_JAVA_OPTS="-Xms2048m -Xmx2048m" --privileged=true -d -p 9200:9200 -p 9300:9300  -e xpack.security.enabled=false -v /home/sanwu/es1.yml:/usr/share/elasticsearch/config/elasticsearch.yml -v /home/sanwu/ES/data1:/usr/share/elasticsearch/data --name ES01 elasticsearch:7.0.0
+docker run --network mynetwork --ip 172.18.0.12  -e ES_JAVA_OPTS="-Xms2048m -Xmx2048m" --privileged=true  -d -p 9201:9200 -p 9301:9300  -e xpack.security.enabled=false -v /home/sanwu/es2.yml:/usr/share/elasticsearch/config/elasticsearch.yml -v /home/sanwu/ES/data2:/usr/share/elasticsearch/data  --link  ES01   --name ES02  elasticsearch:7.0.0
+docker run --network mynetwork --ip 172.18.0.13 -e ES_JAVA_OPTS="-Xms2048m -Xmx2048m"  --privileged=true  -d  -p 9202:9200 -p 9302:9300   -e xpack.security.enabled=false -v /home/sanwu/es3.yml:/usr/share/elasticsearch/config/elasticsearch.yml -v /home/sanwu/ES/data3:/usr/share/elasticsearch/data  --link  ES01   --name ES03  elasticsearch:7.0.0
+
+docker run -d -p 9201:9200 -p 9301:9300 --name es1 -h es1 -e cluster.name=sanwu-es  -e ES_JAVA_OPTS="-Xms2048m -Xmx2048m"  -e xpack.security.enabled=false -v /home/sanwu/es1.yml:/usr/share/elasticsearch/config/elasticsearch.yml -v /home/sanwu/ES/data1:/usr/share/elasticsearch/data  elasticsearch:6.7.2
+docker run -d -p 9202:9200 -p 9302:9300 --link es1 --name es2 -e cluster.name=sanwu-es -e ES_JAVA_OPTS="-Xms2048m -Xmx2048m" -e xpack.security.enabled=false  -e discovery.zen.ping.unicast.hosts=es1 -v /home/sanwu/es3.yml:/usr/share/elasticsearch/config/elasticsearch.yml -v /home/sanwu/ES/data2:/usr/share/elasticsearch/data  elasticsearch:6.7.2
+docker run -d -p 9203:9200 -p 9303:9300 --link es1 --name es3 -e cluster.name=sanwu-es -e ES_JAVA_OPTS="-Xms2048m -Xmx2048m" -e xpack.security.enabled=false  -e discovery.zen.ping.unicast.hosts=es1 -v /home/sanwu/es3.yml:/usr/share/elasticsearch/config/elasticsearch.yml -v /home/sanwu/ES/data3:/usr/share/elasticsearch/data  elasticsearch:6.7.2
+firewall-cmd --permanent --zone=public --add-port=9200/tcp
+
+
+docker run -d  -p 9090:8080 -p 50000:50000 --name jenkins --privileged=true  --network mynetwork --ip 172.18.0.15 -v /home/sanwu/jenkins:/var/jenkins_home   173b5f49b57a
+
+
+docker run   --network mynetwork --ip 172.18.0.16 -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+
+docker run --network mynetwork --ip 172.18.0.17 -d -p 27017:27017 --restart=always  --name mongo -v 'pwd':/db -d mongo:3.4.20
+deb http://mirrors.aliyun.com/debian wheezy main contrib non-free
+deb-src http://mirrors.aliyun.com/debian wheezy main contrib non-free
+deb http://mirrors.aliyun.com/debian wheezy-updates main contrib non-free
+deb-src http://mirrors.aliyun.com/debian wheezy-updates main contrib non-free
+deb http://mirrors.aliyun.com/debian-security wheezy/updates main contrib non-free
+deb-src http://mirrors.aliyun.com/debian-security wheezy/updates main contrib non--free
+
+
+docker run -d --name kafka1  -p 9092:9092 -e KAFKA_BROKER_ID=0 -e KAFKA_ZOOKEEPER_CONNECT=172.17.0.2:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://172.17.0.2:9092 -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 -t wurstmeister/kafka
+
+docker run -d --name zookeeper -p 2181:2181 -t wurstmeister/zookeeper
